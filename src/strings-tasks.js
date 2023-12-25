@@ -497,23 +497,29 @@ function extractEmails(str) {
  *
  */
 function encodeToRot13(str) {
-  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-  const length = alphabet.length;
+  const capitals = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const lowercase = 'abcdefghijklmnopqrstuvwxyz';
 
-  let result = '';
+  return str
+    .split('')
+    .map((char) => {
+      let result = char;
 
-  for (let i = 0; i < str.length; i += 1) {
-   const char = str[i];
-   if (alphabet.includes(char)) {
-     const index = alphabet.indexOf(char);
-     const newIndex = (index + 13) % length;
-     const newChar = alphabet[newIndex];
-     result += newChar;
-   } else {
-     result += char;
-   }
-}
-return result;
+      if (capitals.includes(char)) {
+        const index = capitals.indexOf(char);
+        const newIndex = (index + 13) % capitals.length;
+        result = capitals[newIndex];
+      }
+
+      if (lowercase.includes(char)) {
+        const index = lowercase.indexOf(char);
+        const newIndex = (index + 13) % lowercase.length;
+        result = lowercase[newIndex];
+      }
+
+      return result;
+    })
+    .join('');
 }
 
 /**
@@ -540,8 +546,63 @@ return result;
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const deck = [
+    'A♣',
+    '2♣',
+    '3♣',
+    '4♣',
+    '5♣',
+    '6♣',
+    '7♣',
+    '8♣',
+    '9♣',
+    '10♣',
+    'J♣',
+    'Q♣',
+    'K♣',
+    'A♦',
+    '2♦',
+    '3♦',
+    '4♦',
+    '5♦',
+    '6♦',
+    '7♦',
+    '8♦',
+    '9♦',
+    '10♦',
+    'J♦',
+    'Q♦',
+    'K♦',
+    'A♥',
+    '2♥',
+    '3♥',
+    '4♥',
+    '5♥',
+    '6♥',
+    '7♥',
+    '8♥',
+    '9♥',
+    '10♥',
+    'J♥',
+    'Q♥',
+    'K♥',
+    'A♠',
+    '2♠',
+    '3♠',
+    '4♠',
+    '5♠',
+    '6♠',
+    '7♠',
+    '8♠',
+    '9♠',
+    '10♠',
+    'J♠',
+    'Q♠',
+    'K♠',
+  ];
+
+  return deck.indexOf(value);
 }
 
 module.exports = {
